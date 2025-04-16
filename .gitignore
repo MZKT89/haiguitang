@@ -1,0 +1,47 @@
+# Python 编译生成的字节码文件
+*.pyc
+__pycache__/
+
+# 虚拟环境目录
+venv/
+env/
+.venv/
+
+# Jupyter Notebook 生成的检查点文件
+*.ipynb_checkpoints/
+
+# 日志文件
+*.log
+
+# 数据文件（如果有大型数据文件不想上传到仓库）
+# data/
+
+# 配置文件（如果包含敏感信息，如 API 密钥、数据库密码等）
+config/*.ini
+config/*.yaml
+config/*.json
+
+# IDE 相关文件
+.idea/
+.vscode/
+
+# PyCharm 生成的文件
+*.iml
+
+# 覆盖测试相关文件
+.coverage
+htmlcov/
+
+# 缓存文件
+.cache/
+
+# 打包相关文件
+dist/
+build/
+*.egg-info/
+*.egg
+
+
+
+.env 
+haiguitangAgent/sql_tool/turtle.json
