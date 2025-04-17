@@ -30,27 +30,26 @@ class TurtleSoupAgent:
             self.base_url = base_url
             print(f"base_url: {self.base_url}")
         else:
-            self.base_url = os.getenv("BASE_URL")
-            
+            self.base_url = os.getenv("BASE_URL") 
+        self.memory = Memory()
+
 
         if messages is not None:
             self.messages = messages
         else:
-            self.messages = [{"role": "system", "content": agent_prompt}]
+            self.messages = [{"role": "system", "content": agent_prompt}] + self.memory.to_messages()
 
         self.client = openai.OpenAI(api_key=self.api_key, base_url=self.base_url)
         print(f"client: {self.client}")
-        self.memory = Memory()
 
 
     def chat(self, question):
         console = Console()
         self.messages.append({"role": "user", "content": question})
-        self.messages = self.messages[-20:]
-
-        if len(self.messages) >= 17:  # 防止丢失上下文
-            self.messages = self.messages + [{"role": "system", "content": agent_prompt}] + self.memory.to_messages()
-
+        # 修改
+        if len(self.messages) >= 20:
+            self.messages = self.messages.pop(2) 
+        
         response = chat_base(messages=self.messages, 
                                 client=self.client, 
                                 model=self.model)
@@ -74,6 +73,9 @@ class TurtleSoupAgent:
                     print("记忆已重置，开始新游戏。")
                 if "story" in response_data and "truth" in response_data:
                     self.memory.store_story_and_truth(response_data["story"], response_data["truth"])
+                    # 更新messagelist的memory
+                    # self.messages[1] = self.memory.to_messages()[0]
+                    self.messages[1:2] = self.memory.to_messages()
                 elif "user_known_info" in response_data:
                     self.memory.add_user_known_info(response_data["user_known_info"])
                 console.print("**海龟汤助手**:", response_data.get("response_for_user", content))
