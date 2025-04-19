@@ -42,10 +42,6 @@ class TurtleSoupAgent:
         self.client = openai.OpenAI(api_key=self.api_key, base_url=self.base_url)
         print(f"client: {self.client}")
 
-    @property
-    def response(self):
-        return self._response
-
     def chat(self, question):
         console = Console()
         self.messages.append({"role": "user", "content": question})
@@ -70,7 +66,6 @@ class TurtleSoupAgent:
             content = content.split('```json')[1].split('```')[0].strip()
             try:
                 response_data = json.loads(content)
-                self._response = response_data
                 should_reset = response_data.get("new_game", False)
                 if should_reset:
                     self.memory.reset()
