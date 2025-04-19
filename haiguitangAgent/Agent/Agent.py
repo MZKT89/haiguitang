@@ -33,7 +33,6 @@ class TurtleSoupAgent:
             self.base_url = os.getenv("BASE_URL") 
         self.memory = Memory()
 
-
         if messages is not None:
             self.messages = messages
         else:

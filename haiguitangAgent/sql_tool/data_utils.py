@@ -84,4 +84,39 @@ def deduplicate_stories():
         # 关闭数据库连接
         conn.close()
 
-deduplicate_stories()
+# deduplicate_stories()
+def read_story_by_id(story_id):
+    """
+    根据故事 ID 从数据库中读取故事
+    :param story_id: 故事 ID
+    :return: 故事内容
+    """
+    conn = sqlite3.connect(db_file_path)
+    cursor = conn.cursor()
+    try:
+        query = "SELECT story FROM turtle_soup_stories WHERE id = ?"
+        cursor.execute(query, (story_id,))
+        result = cursor.fetchone()
+        if result:
+            full_story = result[0]
+            # 假设故事情节和真相之间有固定的分隔符 "真相："
+            parts = full_story.split("真相：")
+            if len(parts) == 2:
+                story = parts[0].replace("故事情节：", "").strip()
+                truth = parts[1].strip()
+                return story, truth
+            else:
+                print(f"无法正确解析 ID 为 {story_id} 的故事。")
+                return None
+        else:
+            print(f"未找到 ID 为 {story_id} 的故事。")
+            return None
+    except Exception as e:
+        print(f"查询故事时出现错误: {e}")
+        return None
+    finally:
+        conn.close()
+
+# story, truth = read_story_by_id(1)
+# print("故事情节:", story)
+# print("故事真相:", truth)
