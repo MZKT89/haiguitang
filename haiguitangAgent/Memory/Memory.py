@@ -3,6 +3,8 @@ class Memory:
         self.story = None
         self.truth = None
         self.user_known_info = []
+        self.left_question_chance = None
+        self.left_answer_chance = None
 
     def store_story_and_truth(self, story, truth):
         self.story = story
@@ -18,7 +20,32 @@ class Memory:
         return self.truth
 
     def get_user_known_info(self):
-        return self.user_known_info
+        info_str = ""
+        info_len = len(self.user_known_info)
+        for i, info in enumerate(self.user_known_info):
+            current_info = str(i+1) + ". " + info
+            info_str += current_info
+            if i + 1 < info_len:
+                info_str += "\n"
+        return info_str
+    
+    def set_left_question_chance(self, value):
+        self.left_question_chance = value
+
+    def set_left_answer_chance(self, value):
+        self.left_answer_chance = value
+    
+    def to_player_agent(self):
+        msgs = {}
+        if self.story:
+            msgs["story"] = self.story
+        if self.user_known_info:
+            msgs["user_known_info"] = "; ".join(self.user_known_info)
+        if self.left_question_chance is not None:
+            msgs["left_question_chance"] = str(self.left_question_chance)
+        if self.left_answer_chance is not None:
+            msgs["left_answer_chance"] = str(self.left_answer_chance)
+        return msgs
     
     def to_messages(self):
         content_parts = []

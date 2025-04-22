@@ -182,4 +182,3 @@ def create_function_response_messages(messages, response):
 if __name__ == "__main__":
     assistant = TurtleSoupAgent()
     assistant.chat("我想玩一个校园相关海龟汤")
-
