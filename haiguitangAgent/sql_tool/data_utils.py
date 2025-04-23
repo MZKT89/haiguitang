@@ -4,11 +4,12 @@ import sqlite3
 # 定义 JSON 文件路径和数据库文件路径
 json_file_path = 'turtle.json'
 db_file_path = 'turtle_soup.db'
-db_file_path = 'haiguitang/haiguitangAgent/sql_tool/turtle_soup.db'
+db_file_path = 'haiguitangAgent/sql_tool/turtle_soup.db'
 
 import sqlite3
 
 def get_qids():
+    print("[DEBUG] db_file_path {db_file_path}")
     conn = sqlite3.connect(db_file_path)
     cursor = conn.cursor()
     qids = []
