@@ -3,6 +3,11 @@ from haiguitangAgent import TurtleSoupAgent
 from haiguitangAgent.Agent.PlayerAgent import PlayerAgent
 from haiguitangAgent.Agent.Agent_leaderboard import TurtleSoupLeaderboardAgent
 
+# 页面加载时清空 session_state
+if "initialized" not in st.session_state:
+    st.session_state.clear()  # 清空所有 session_state 内容
+    st.session_state.initialized = True  # 标记页面已初始化
+
 st.set_page_config(
     page_title="海龟汤问答助手",
     page_icon="🐢",
@@ -15,7 +20,7 @@ mode = st.sidebar.selectbox(
 )
 
 # ---------- 状态管理 及 刷新逻辑 ----------
-SAVED_KEYS = ["current_mode", "need_rerun"]
+SAVED_KEYS = ["current_mode", "need_rerun", "initialized"]  # 添加 initialized 到需要保留的键
 # 新增通配模式下多余展开状态的key
 ALL_MODE_KEYS = [
     "show_story_solo", "show_info_solo",
