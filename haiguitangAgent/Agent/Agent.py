@@ -1,7 +1,6 @@
 import os
 from dotenv import load_dotenv
 import openai
-from IPython.display import display, Markdown
 import json
 from haiguitangAgent.sql_tool.sql_tool import sql_inter, sql_inter_tool
 from haiguitangAgent.config.config import DS_API_KEY, DS_BASE_URL, DS_MODEL, OPENAI_API_KEY, OPENAI_MODEL, OPENAI_BASE_URL
