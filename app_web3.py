@@ -3,6 +3,11 @@ from haiguitangAgent import TurtleSoupAgent
 from haiguitangAgent.Agent.PlayerAgent import PlayerAgent
 from haiguitangAgent.Agent.Agent_leaderboard import TurtleSoupLeaderboardAgent
 
+# 页面加载时清空 session_state
+if "initialized" not in st.session_state:
+    st.session_state.clear()  # 清空所有 session_state 内容
+    st.session_state.initialized = True  # 标记页面已初始化
+
 st.set_page_config(
     page_title="海龟汤问答助手",
     page_icon="🐢",
@@ -15,7 +20,7 @@ mode = st.sidebar.selectbox(
 )
 
 # ---------- 状态管理 及 刷新逻辑 ----------
-SAVED_KEYS = ["current_mode", "need_rerun"]
+SAVED_KEYS = ["current_mode", "need_rerun", "initialized"]  # 添加 initialized 到需要保留的键
 # 新增通配模式下多余展开状态的key
 ALL_MODE_KEYS = [
     "show_story_solo", "show_info_solo",
@@ -177,7 +182,6 @@ def leaderboard_mode():
     if "lb_messages" not in st.session_state:
         st.session_state.lb_messages = []
         story = leaderboard_agent.memory.get_story()
-        user_known_info = leaderboard_agent.memory.get_user_known_info()
         first_msg = "欢迎来到打榜模式！你将和全球玩家同场竞技。"
         st.session_state.lb_messages.append({"role": "assistant", "content": first_msg})
         st.session_state.lb_messages.append({"role": "assistant", "content": f"故事背景：{story}"})
@@ -204,7 +208,9 @@ def leaderboard_mode():
                 "content": f"{response}"
             })
             # 检查是否答对，重新生成story
-            if "恭喜你答对了！" or "未能在限制轮数中揭开谜底~" in str(response):
+            if "恭喜你答对了！" in response or "未能在限制轮数中揭开谜底~" in response:
+                print()
+                print(response)
                 new_story = leaderboard_agent.memory.get_story()
                 st.session_state.lb_messages.append({
                     "role": "assistant",

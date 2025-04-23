@@ -27,6 +27,7 @@ class TurtleSoupLeaderboardAgent:
         else:
             self.base_url = os.getenv("BASE_URL") 
         self.memory = Memory()
+        self.memory.reset()
         self.current_question_index = 0
         self.scores = 0
 
@@ -147,9 +148,10 @@ class TurtleSoupLeaderboardAgent:
                     # 获取新游戏的故事和真相 判断 current question index 
                     if self.current_question_index >= len(self.question_ids):
                         self.finished = True
-                    else:
-                        # 获取新的游戏故事和真相
-                        self.get_new_game()
+                        return "打榜完成！"
+                    
+                    # 获取新的游戏故事和真相
+                    self.get_new_game()
                     
                     return response
 
