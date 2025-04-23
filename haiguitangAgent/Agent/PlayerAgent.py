@@ -30,10 +30,10 @@ class PlayerAgent:
     def receive_info(self, info):
         self.messages = [{"role": "system", "content": player_agent_prompt}]
         if story := info.get("story", None):
-            print(f"故事：{story}")
+            # print(f"故事：{story}")
             self.messages.append({"role": "user", "content": "题目：" + story})
-        if truth := info.get("truth", None):
-            print(f"真相：{truth}")
+        # if truth := info.get("truth", None):
+            # print(f"真相：{truth}")
         if user_known_info := info.get("user_known_info", None):
             print(f"已掌握的信息：{user_known_info}")
             self.messages.append({"role": "user", "content": "已掌握的信息：" + user_known_info})

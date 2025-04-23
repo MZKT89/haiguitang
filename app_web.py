@@ -52,7 +52,7 @@ if prompt := st.chat_input("请输入您的问题..."):
         except Exception as e:
             response = f"获取回答时出错：{str(e)}"
     # 添加助手回复
-    st.session_state.messages.append({"role": "assistant", "content": response})
+    st.session_state.messages.asppend({"role": "assistant", "content": response})
     with st.chat_message("assistant"):
         st.markdown(response)
 

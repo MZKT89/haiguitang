@@ -6,6 +6,28 @@ json_file_path = 'turtle.json'
 db_file_path = 'turtle_soup.db'
 db_file_path = 'haiguitang/haiguitangAgent/sql_tool/turtle_soup.db'
 
+import sqlite3
+
+def get_qids():
+    conn = sqlite3.connect(db_file_path)
+    cursor = conn.cursor()
+    qids = []
+    try:
+        # 执行 SQL 查询，从 turtle_soup_stories 表中选择所有的 id
+        cursor.execute("SELECT id FROM turtle_soup_stories")
+        # 获取所有查询结果
+        results = cursor.fetchall()
+        # 遍历结果，将每个 id 添加到 qids 列表中
+        for row in results:
+            qids.append(row[0])
+    except sqlite3.Error as e:
+        print(f"Error occurred while querying the database: {e}")
+    finally:
+        # 关闭游标和数据库连接
+        cursor.close()
+        conn.close()
+    return qids
+
 def add_new_soup():
     conn = sqlite3.connect(db_file_path)
     cursor = conn.cursor()
@@ -157,4 +179,4 @@ def read_story_by_id(story_id):
 # story, truth = read_story_by_id(1)
 # print("故事情节:", story)
 # print("故事真相:", truth)
-add_new_soup()
+# add_new_soup()
