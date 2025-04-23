@@ -177,7 +177,6 @@ def leaderboard_mode():
     if "lb_messages" not in st.session_state:
         st.session_state.lb_messages = []
         story = leaderboard_agent.memory.get_story()
-        user_known_info = leaderboard_agent.memory.get_user_known_info()
         first_msg = "欢迎来到打榜模式！你将和全球玩家同场竞技。"
         st.session_state.lb_messages.append({"role": "assistant", "content": first_msg})
         st.session_state.lb_messages.append({"role": "assistant", "content": f"故事背景：{story}"})
@@ -204,7 +203,9 @@ def leaderboard_mode():
                 "content": f"{response}"
             })
             # 检查是否答对，重新生成story
-            if "恭喜你答对了！" or "未能在限制轮数中揭开谜底~" in str(response):
+            if "恭喜你答对了！" in response or "未能在限制轮数中揭开谜底~" in response:
+                print()
+                print(response)
                 new_story = leaderboard_agent.memory.get_story()
                 st.session_state.lb_messages.append({
                     "role": "assistant",
