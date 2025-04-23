@@ -63,7 +63,8 @@ class TurtleSoupAgent:
         # 去除非 JSON 字符
             content = content.split('```json')[1].split('```')[0].strip()
             try:
-                response_data = json.loads(content)
+                # response_data = json.loads(content)
+                response_data = eval(content)
                 should_reset = response_data.get("new_game", False)
                 if should_reset:
                     self.memory.reset()

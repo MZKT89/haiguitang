@@ -125,7 +125,7 @@ class TurtleSoupLeaderboardAgent:
             content = content.split('```json')[1].split('```')[0].strip()
             try:
                 # TODO 判断newgame是不是true，是的话就重置获取新的story， 这里prompt要写返回newgame的条件是上一道题出结果了
-                response_data = json.loads(content)
+                response_data = eval(content)
                 
                 # TODO 这里改成是否有结果 ，
                 bingo = response_data.get("bingo", None)
