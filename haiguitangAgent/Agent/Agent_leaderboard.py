@@ -121,9 +121,13 @@ class TurtleSoupLeaderboardAgent:
             return "模型无响应"
             
         content = response.choices[0].message.content
+        print(1)
+        print(content)
         if '```json' in content and '```' in content:
         # 去除非 JSON 字符
             content = content.split('```json')[1].split('```')[0].strip()
+            print(2)
+            print(content)
             try:
                 # TODO 判断newgame是不是true，是的话就重置获取新的story， 这里prompt要写返回newgame的条件是上一道题出结果了
                 response_data = eval(content)

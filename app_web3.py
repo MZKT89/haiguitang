@@ -8,6 +8,22 @@ if "initialized" not in st.session_state:
     st.session_state.clear()  # 清空所有 session_state 内容
     st.session_state.initialized = True  # 标记页面已初始化
 
+    # agent = init_agent()
+# player_agent = init_player_agent()
+# leaderboard_agent = init_leaderboard_agent()
+
+if "agent" not in st.session_state:
+    st.session_state.agent = TurtleSoupAgent()
+agent = st.session_state.agent
+
+if "player_agent" not in st.session_state:
+    st.session_state.player_agent = PlayerAgent()
+player_agent = st.session_state.player_agent
+
+if "leaderboard_agent" not in st.session_state:
+    st.session_state.leaderboard_agent = TurtleSoupLeaderboardAgent()
+leaderboard_agent = st.session_state.leaderboard_agent
+
 st.set_page_config(
     page_title="海龟汤问答助手",
     page_icon="🐢",
@@ -44,24 +60,20 @@ if st.session_state.get("need_rerun", False):
     st.rerun()
 
 # ---------- Agent 初始化 ----------
-@st.cache_resource
+# @st.cache_resource
 def init_agent():
     return TurtleSoupAgent()
 
-@st.cache_resource
+# @st.cache_resource
 def init_player_agent():
     return PlayerAgent()
 
-@st.cache_resource
+# @st.cache_resource
 def init_leaderboard_agent():
     aki_key = "7d9451a3-d20a-4d51-8294-0ffb01813be0"
     model = "deepseek-v3-250324"
     base_url = "https://ark.cn-beijing.volces.com/api/v3"
     return TurtleSoupLeaderboardAgent(aki_key, model, base_url)
-
-agent = init_agent()
-player_agent = init_player_agent()
-leaderboard_agent = init_leaderboard_agent()
 
 # ---------- 单人模式 ----------
 def solo_mode():
