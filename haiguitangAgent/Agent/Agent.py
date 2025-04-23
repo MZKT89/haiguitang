@@ -45,7 +45,7 @@ class TurtleSoupAgent:
         console = Console()
         self.messages.append({"role": "user", "content": question})
         # 修改
-        if len(self.messages) >= 20:
+        if len(self.messages) >= 40:
             self.messages = self.messages.pop(2) 
         
         response = chat_base(messages=self.messages, 
