@@ -275,6 +275,7 @@ def leaderboard_mode():
 if mode == "单人模式":
     solo_mode()
 elif mode == "PK模式":
-    pk_mode()
+    # pk_mode()
+    st.markdown("# **🚧 施工中**")
 elif mode == "打榜模式":
     leaderboard_mode()
